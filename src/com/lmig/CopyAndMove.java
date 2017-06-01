@@ -1,11 +1,12 @@
 package com.lmig;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 
 public class CopyAndMove {
-	public static void write(byte[] bs, String outPath) {
+	public static void write(byte[] bs, String outPath) throws Exception {
 		
 		try  {
 		RandomAccessFile f = new RandomAccessFile(outPath, "rw");
@@ -37,13 +38,25 @@ public class CopyAndMove {
 				}
 			}
 			f.close();
-		} catch (IOException ex) {
+		} 
+		catch (FileNotFoundException ex) {
+			System.out.println("File not found or not valid!");
+			return;
+		}
+		catch (IOException ex) {
 			System.out.println(ex);
 			return;
 		}
 		Charset cs = Charset.forName("UTF-8");
 		String s = new String(data, cs);
 		System.out.println(s);
-		CopyAndMove.write(data, args[1]);
+		try {
+			CopyAndMove.write(data, args[1]);
+		} catch (Exception e) {
+			System.out.println("Hey you can't do that!");
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
