@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CopyAndMove {
 	public static void write(byte[] bs, String outPath) throws Exception {
-		
+		//Files.createDirectories(Paths.get("/path/to/directory"));
 		try  {
 		RandomAccessFile f = new RandomAccessFile(outPath, "rw");
 		f.write(bs);
@@ -18,8 +20,11 @@ public class CopyAndMove {
 	}
 
 	// public RandomAccessFile(String name, String mode);
-
+	
 	public static void main(String[] args) {
+		if (args.length != 2){
+			System.out.println("There are not two files so you cannot copy or move");
+		}
 		String filePath = args[0];
 		byte[] buf = new byte[100];
 		byte[] data = null;
@@ -54,9 +59,7 @@ public class CopyAndMove {
 			CopyAndMove.write(data, args[1]);
 		} catch (Exception e) {
 			System.out.println("Hey you can't do that!");
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 	}
 }
